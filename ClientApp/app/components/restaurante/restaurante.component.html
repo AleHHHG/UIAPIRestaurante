@@ -1,0 +1,42 @@
+﻿<section *ngIf="!showForm">
+    <h1>Restaurantes</h1>
+    <div class="options well">
+        <div class="form-group" [formGroup]="formSearch">
+            <label>Nome:</label>
+            <input type="text" class="form-control" formControlName="search"/>
+        </div>
+        <button class="btn btn-default" (click)="search()"><i class="glyphicon-search"></i> Pesquisar</button>
+        <button class="btn btn-success" (click)="cadastrar()"><i class="glyphicon-plus"></i> Novo Restaurante</button>
+    </div>
+    <p *ngIf="!restaurantes"><em>Nenhum restuarannte encontrado...</em></p>
+    <table class='table' *ngIf="restaurantes">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>#</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of restaurantes">
+                <td>{{ item.id }}</td>
+                <td>{{ item.nome }}</td>
+                <td>
+                    <button class="btn btn-primary btn-xs" (click)="editar(item)"><i class="glyphicon glyphicon-pencil"></i></button>
+                    <button class="btn btn-danger btn-xs" (click)="deletar(item.id)"><i class="glyphicon glyphicon glyphicon-remove"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<section *ngIf="showForm">
+    <h1>{{label}}</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label>Nome</label>
+            <input type="text" class="form-control" formControlName="nome" />
+        </div>
+        <button class="btn btn-default" (click)="voltar()">Voltar</button>
+        <button class="btn btn-success" type="submit">Salvar</button>
+    </form>
+</section>

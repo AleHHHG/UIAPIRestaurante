@@ -1,0 +1,51 @@
+﻿<section *ngIf="!showForm">
+    <h1>
+        Pratos
+        <button class="btn btn-success pull-right" (click)="cadastrar()"><i class="glyphicon-plus"></i> Novo Prato</button>
+    </h1>
+    <hr/>
+    <p *ngIf="!pratos"><em>Nenhum prato encontrado...</em></p>
+    <table class='table' *ngIf="pratos">
+        <thead>
+            <tr>
+                <th>Restaurante</th>
+                <th>Prato</th>
+                <th>Preço</th>
+                <th>#</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of pratos">
+                <td>{{ item.restaurante.nome }}</td>
+                <td>{{ item.nome }}</td>
+                <td>R$ {{ item.preco }}</td>
+                <td>
+                    <button class="btn btn-primary btn-xs" (click)="editar(item)"><i class="glyphicon glyphicon-pencil"></i></button>
+                    <button class="btn btn-danger btn-xs" (click)="deletar(item.id)"><i class="glyphicon glyphicon glyphicon-remove"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section *ngIf="showForm">
+    <h1>{{label}}</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label>Restaurante</label>
+            <select class="form-control" formControlName="restauranteId">
+                <option *ngFor="let restaurante of restaurantes" value="{{restaurante.id}}">{{restaurante.nome}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Nome</label>
+            <input type="text" class="form-control" formControlName="nome" />
+        </div>
+        <div class="form-group">
+            <label>Preço</label>
+            <input type="text" class="form-control" formControlName="preco" />
+        </div>
+        <button class="btn btn-default" (click)="voltar()">Voltar</button>
+        <button class="btn btn-success" [disabled]="!form.valid" type="submit">Salvar</button>
+    </form>
+</section>
